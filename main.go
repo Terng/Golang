@@ -52,9 +52,11 @@ func promptOptions(b bill) {
 				break
 			}
 		}
+		promptOptions(b)
 
 	case "s":
-		fmt.Println("You choose s")
+		b.save()
+		fmt.Println("You has been saved: ,", b.name)
 	case "t":
 		fmt.Println("You choose t")
 		tip, _ := getInput("Enter tips amount ($): ", reader)

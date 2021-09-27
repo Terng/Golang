@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 )
 
 type bill struct {
@@ -42,4 +44,31 @@ func (b *bill) updTip(tip float64) {
 }
 func (b *bill) addItem(name string, price float64) {
 	b.iteams[name] = price
+}
+
+func (b *bill) save() {
+	data := []byte(b.format())
+	mkdir("bills")
+	err := os.WriteFile("bills/"+b.name+".txt", data, 0644)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Bill was saved !!")
+}
+
+// func mkdir(path string) {
+// 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
+// 		err := os.Mkdir(path, os.ModePerm)
+// 		if err != nil {
+// 			log.Println(err)
+// 		}
+// 	}
+// }
+
+func mkdir(path string) {
+	err := os.MkdirAll(path, os.ModePerm)
+	if err != nil {
+		log.Println(err)
+
+	}
 }
